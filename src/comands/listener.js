@@ -2,7 +2,7 @@ import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import { name } from './greeting.js';
-import { makeFileNavigation } from './makeFileNavigation.js';
+import { makeWorkWithFile } from './makeWorkWithFile.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -18,7 +18,7 @@ export const listener = () => {
       process.stdout.write(`Thank you for using File Manager, ${name}!`);
       process.exit(0);
     } 
-    makeFileNavigation(data)
+    makeWorkWithFile(data)
   })
 };
 
