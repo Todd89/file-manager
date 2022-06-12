@@ -1,5 +1,3 @@
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 import { makeList } from './makeList.js';
 import { downToDir } from './downToDir.js';
 import { readFile } from './fileWorkers/readFile.js';
@@ -9,14 +7,12 @@ import { copyFile } from './fileWorkers/copyFile.js';
 import { moveFile } from './fileWorkers/moveFile.js';
 import { deleteFile } from './fileWorkers/deleteFile.js';
 import { workWithOS } from './OSWorkers/workWithOS.js';
+import { makeHash } from './hash/makeHash.js';
+import { makeCompress } from './compression/makeCompress.js';
+import { showActualLine } from './showActualLine.js';
+import { makeDecompress } from './compression/makeDecompress.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const read = process.stdin;
-const write = process.stdout;
-
-const trueCommands = new Set (['up', "cd", "ls", "cat", "add", "rn", "cp", "mv", "rm", "os"])
+const trueCommands = new Set (['up', "cd", "ls", "cat", "add", "rn", "cp", "mv", "rm", "os", "hash", "compress", "decompress"])
 
 export const makeWorkWithFile = (command) => {
   const chunkStringified = command.toString().trim();
@@ -36,34 +32,43 @@ export const makeWorkWithFile = (command) => {
   if(trueCommands.has(commandOperator)) {
     switch (commandOperator) {
       case "up": process.chdir(`${upDir}/`);
-      process.stdout.write(`You are currently in path_to_working_directory: ${process.cwd()}\n`);
+      showActualLine();
       break;
       case "ls":  makeList(url);
-      process.stdout.write(`You are currently in path_to_working_directory: ${process.cwd()}\n`);
+      showActualLine();
       break;
       case "cd": downToDir(chunkStringified);
-      process.stdout.write(`You are currently in path_to_working_directory: ${process.cwd()}\n`);
+      showActualLine();
       break;
       case "cat": readFile(chunkStringified);
-      process.stdout.write(`You are currently in path_to_working_directory: ${process.cwd()}\n`);
+      showActualLine();
       break;
       case "add": addFile(chunkStringified);
-      process.stdout.write(`You are currently in path_to_working_directory: ${process.cwd()}\n`);
+      showActualLine();
       break;
       case "rn": renameFile(chunkStringified);
-      process.stdout.write(`You are currently in path_to_working_directory: ${process.cwd()}\n`);
+      showActualLine();
       break;
       case "cp": copyFile(chunkStringified);
-      process.stdout.write(`You are currently in path_to_working_directory: ${process.cwd()}\n`);
+      showActualLine();
       break;
       case "mv": moveFile(chunkStringified);
-      process.stdout.write(`You are currently in path_to_working_directory: ${process.cwd()}\n`);
+      showActualLine();
       break;
       case "rm": deleteFile(chunkStringified);
-      process.stdout.write(`You are currently in path_to_working_directory: ${process.cwd()}\n`);
+      showActualLine();
       break;
       case "os": workWithOS(chunkStringified);
-      process.stdout.write(`You are currently in path_to_working_directory: ${process.cwd()}\n`);
+      showActualLine();
+      break;
+      case "hash": makeHash(chunkStringified);
+      showActualLine();
+      break;
+      case "compress": makeCompress(chunkStringified);
+      showActualLine();
+      break;
+      case "decompress": makeDecompress(chunkStringified);
+      showActualLine();
       break;
       default: console.log("Invalid input\n");
       break;
