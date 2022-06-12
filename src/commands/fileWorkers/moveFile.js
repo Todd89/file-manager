@@ -8,9 +8,9 @@ export const moveFile = async (command) => {
   if (twoPathArr.length === 2) {
     const file = twoPathArr[0];
     let new_path = twoPathArr[1];
+    
     new_path = new_path.split('')[1] === ":" ? `${twoPathArr[1]}/${file}` : `${process.cwd()}/${new_path}/${file}`;
 
-    
     const  read = fs.createReadStream(`${process.cwd()}/${file}`);
     const  write = fs.createWriteStream(`${new_path}`);
 

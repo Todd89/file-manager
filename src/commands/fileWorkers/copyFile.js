@@ -10,7 +10,7 @@ export const copyFile = async (command) => {
     let new_path = twoPathArr[1];
    
     new_path = new_path.split('')[1] === ":" ? `${twoPathArr[1]}/copy_${file}` : `${process.cwd()}/${new_path}/copy_${file}`;
-
+    
     const  read = fs.createReadStream(`${process.cwd()}/${file}`);
     const  write = fs.createWriteStream(`${new_path}`);
 
