@@ -10,6 +10,10 @@ export const addFile = async (command) => {
       console.log("Operation failed");
    })
   .catch(() => fs.writeFile(file, "",  function (err) {
-             if (err)  console.log("Operation failed");
+             if (err) {
+              console.log("Operation failed");
+             } else {
+              console.log("Add file was successful");
+             } 
        }));
 }

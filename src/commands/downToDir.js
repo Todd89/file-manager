@@ -7,12 +7,11 @@ const __dirname = dirname(__filename);
 
 export const downToDir = (command) => {
   const chunkStringified = command.toString().trim();
-  const downDir = chunkStringified.slice(2);
+  const downDir = chunkStringified.slice(2).trim();
+  const new_path = downDir.split('')[1] === ":" ? `${downDir}` : `${process.cwd()}//${downDir.trim()}`;
 
-
-  const actualDir = process.cwd();
   try {
-    process.chdir(`${actualDir}/${downDir.trim()}`)
+    process.chdir(`${new_path}`)
   } catch {
     console.log("Invalid input")
   }

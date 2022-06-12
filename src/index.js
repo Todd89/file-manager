@@ -1,13 +1,9 @@
-import { greeting } from './comands/greeting.js';
+import { greeting } from './commands/greeting.js';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import { listener } from './comands/listener.js';
-import { name } from './comands/greeting.js';
-import getHomeDirectory from './comands/getHomeDirectory.js';
-
-import fs from 'fs'
-
-import os from  "os";
+import { listener } from './commands/listener.js';
+import { name } from './commands/greeting.js';
+import getHomeDirectory from './commands/getHomeDirectory.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
