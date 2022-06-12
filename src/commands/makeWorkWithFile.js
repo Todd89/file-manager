@@ -8,6 +8,7 @@ import { renameFile } from './fileWorkers/renameFile.js';
 import { copyFile } from './fileWorkers/copyFile.js';
 import { moveFile } from './fileWorkers/moveFile.js';
 import { deleteFile } from './fileWorkers/deleteFile.js';
+import { workWithOS } from './OSWorkers/workWithOS.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -15,7 +16,7 @@ const __dirname = dirname(__filename);
 const read = process.stdin;
 const write = process.stdout;
 
-const trueCommands = new Set (['up', "cd", "ls", "cat", "add", "rn", "cp", "mv", "rm"])
+const trueCommands = new Set (['up', "cd", "ls", "cat", "add", "rn", "cp", "mv", "rm", "os"])
 
 export const makeWorkWithFile = (command) => {
   const chunkStringified = command.toString().trim();
@@ -59,6 +60,9 @@ export const makeWorkWithFile = (command) => {
       process.stdout.write(`You are currently in path_to_working_directory: ${process.cwd()}\n`);
       break;
       case "rm": deleteFile(chunkStringified);
+      process.stdout.write(`You are currently in path_to_working_directory: ${process.cwd()}\n`);
+      break;
+      case "os": workWithOS(chunkStringified);
       process.stdout.write(`You are currently in path_to_working_directory: ${process.cwd()}\n`);
       break;
       default: console.log("Invalid input\n");
