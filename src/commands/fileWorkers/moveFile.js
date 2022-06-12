@@ -10,18 +10,23 @@ export const moveFile = async (command) => {
     let new_path = twoPathArr[1];
     new_path = new_path.split('')[1] === ":" ? `${twoPathArr[1]}/${file}` : `${process.cwd()}/${new_path}/${file}`;
 
-    fs.promises.copyFile(`${process.cwd()}/${file}`,`${new_path}`).then(()=> {
-       fs.promises.unlink(`${process.cwd()}/${file}`).then(() => console.log("Move was successful")).catch((err) => {
-        if(err && err.code === 'ENOENT') {
+    
+    const  read = fs.createReadStream(`${process.cwd()}/${file}`);
+    const  write = fs.createWriteStream(`${new_path}`);
+
+    read.on('error', () => console.log('Operation failed'))
+    .pipe(write)
+    .on('error', () => console.log('Operation failed'))
+    .on('finish', () => {
+      fs.unlink(`${process.cwd()}/${file}`, (err) => {
+        if(err) {
           console.log('Operation failed')
+        } else {
+          console.log('Move was success')
         }
       })
-    }).catch((err)  => {
-      if(err) {
-        if (err.code === 'ENOENT')  console.log('Operation failed')
-      }
-    })
-  } else {
-    console.log('Invalid input')
+  })
+      } else {
+    console.log('Invalid input');
   }
 };

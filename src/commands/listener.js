@@ -1,4 +1,3 @@
-import fs from 'fs';
 import { name } from './greeting.js';
 import { makeWorkWithFile } from './makeWorkWithFile.js';
 
